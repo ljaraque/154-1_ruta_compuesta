@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Página de datos desde archivo externo</h1>
+    <hr>
+    <h3>Muestra datos crudos iterando sobre lista</h3>
+    {% for elemento in datos_desde_archivo|slice:"0:5" %}
+    <p>{{elemento}}</p>
+    {% endfor %}
+    <hr>
+
+    <h3>Muestra datos en formato tabla html</h3>
+    <table border="1">
+        <tr>
+            <th>sepal_length</th>
+            <th>sepal_width</th>
+            <th>petal_length</th>
+            <th>petal_width</th>
+            <th>species</th>
+        </tr>
+
+        {% for elemento in datos_desde_archivo|slice:"0:10" %}
+        <tr>
+            <td>{{elemento.sepal_length}}</td>
+            <td>{{elemento.sepal_width}}</td>
+            <td>{{elemento.petal_length}}</td>
+            <td>{{elemento.petal_width}}</td>
+            <td>{{elemento.species}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <hr>
+
+    <h3>Muestra datos en formato tabla html</h3>
+    {% for elemento in datos_desde_archivo %}
+        <b><p>{{elemento}}</p></b>
+        <table border="1">
+        {% for clave, valor in elemento.items %}
+        <tr>
+            <td>{{clave}}</td>
+            <td>{{valor}}</td>
+        </tr>
+        {% endfor %}
+        </table>
+        <p></p>
+    {% endfor %}
+
+        
+
+    </table>
+</body>
+</html>
