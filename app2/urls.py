@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
+app_name = 'app2'
+
 urlpatterns = [
-    path('tabla/', views.cocinero),
+    path('datos/', views.datos, name='datos'),
+    
 ]

@@ -1,28 +1,14 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .texto_azul {
-            color:blue;
-            font-size: 10px;
-        }
 
-        .texto_verde {
-            color:green;
-            font-size: 13px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Página de Inicio Proyecto <b>ruta_compuesta</b> Django</h1>
+{% block contenido %}
+
+    <h3>Página de Inicio Proyecto <b>ruta_compuesta</b> Django</h3>
     <h3>{{contenido_dinamico}}</h3>
     <h3>{{contenido_dinamico2}}</h3>
     <p>A continuación procesamos en el template la lista recibida desde views 
         en la variable 'contenido_dinamico2'</p>
+        <img width="30%" src="{% static 'app1/foto.jpg' %}" alt="">
 
     {% for elemento in contenido_dinamico2 %}
     <p style="color:red; font-size: 30px;">{{elemento}}</p>
@@ -43,6 +29,5 @@
         <label class="texto_verde">Apellido:</label>
         <input type="text"> 
     {% endfor %}
-    <img width="30%" src="{% static 'app1/foto.jpg' %}" alt="">
-</body>
-</html>
+
+{% endblock %}

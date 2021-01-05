@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <table style="width:100%">
+{% extends "base.html" %}
+
+{% block contenido %}
+{{ block.super }}
+    <table border="1">
         <tr>
           <th>Firstname</th>
           <th>Lastname</th>
@@ -23,5 +19,5 @@
           <td>94</td>
         </tr>
       </table>  
-</body>
-</html>
+
+{% endblock %}

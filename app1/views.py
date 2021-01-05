@@ -54,3 +54,6 @@ def noticias(request):
     # envía una instrucción de redireccionamiento al broswer
     # y browser obedece y realiza un nuevo get a esta url
     return HttpResponseRedirect('https://www.washingtonpost.com')
+
+def prueba(request):
+    return render(request, 'app1/base.html')
