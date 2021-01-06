@@ -1,5 +1,8 @@
-from django.shortcuts import render
+import json
+
+from django.shortcuts import render, redirect
 from .forms import FormularioGuitarra
+from django.conf import settings
 
 # Create your views here.
 
@@ -19,12 +22,31 @@ def get_client_ip(request):
     return ip
 '''
 
+def leer_archivo(filename, settings):
+    with open(str(settings.BASE_DIR)+filename, 'r') as file:
+        guitarras=json.load(file)
+    return guitarras
+
+
+def actualizar_archivo(filename, form_data, settings):
+    with open(str(settings.BASE_DIR)+filename, 'r') as file:
+        guitarras=json.load(file)
+    guitarras['guitarras'].append(form_data)
+    with open(str(settings.BASE_DIR)+filename, 'w') as file:
+        json.dump(guitarras, file)
+
 def crear_guitarra(request):
-    data_post =  dict(request.POST)
-    print("\nNUEVO REGISTRO HA LLEGADO!!!!")
-    for clave, valor in data_post.items():
-        print(clave, ": ", valor)
-    #print(get_client_ip(request)) # muestra IP del usuario
-    formulario = FormularioGuitarra()
+    formulario = FormularioGuitarra(request.POST or None)
+    if formulario.is_valid():
+        form_data = formulario.cleaned_data
+        form_data['fecha_compra']=form_data['fecha_compra'].strftime("%Y-%m-%d")
+        filename= "/formularios/data/guitarras.json"
+        actualizar_archivo(filename, form_data, settings)
+        return redirect('formularios:crear_exitoso')
     context = {'form': formulario}
     return render(request, 'formularios/crear_guitarra.html', context)
+
+def crear_exitoso(request):
+    filename= "/formularios/data/guitarras.json"
+    guitarras = leer_archivo(filename, settings)
+    return render(request, 'formularios/crear_exitoso.html', context=guitarras)
