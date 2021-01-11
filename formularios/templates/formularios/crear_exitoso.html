@@ -16,9 +16,9 @@
         <div class="col-sm-3" style="padding-top: 10px;"> 
             <div class="card"> 
                 <div class="card-img"> 
-                    <img src="https://pixabay.com/get/55e2d4424a52a814f1dc8460da29317e1c36dae4555672_640.jpg" width="100%" alt=""> 
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRph9tJ68ak4W7I1kcIoTSJSNlmgOFWmwQShA&usqp=CAU" width="100%" alt=""> 
                     <h5 class="card-text mb-1 text-black-50 small">{{forloop.counter}}
-
+                        <a href="{% url 'formularios:eliminar_guitarra' id=row.id %}"> | Eliminar</a>
                     </h5> 
                 </div> 
                 <div class="card-body"> 
