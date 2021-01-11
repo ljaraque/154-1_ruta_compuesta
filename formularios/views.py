@@ -50,3 +50,19 @@ def crear_exitoso(request):
     filename= "/formularios/data/guitarras.json"
     guitarras = leer_archivo(filename, settings)
     return render(request, 'formularios/crear_exitoso.html', context=guitarras)
+
+def grafico2(request):
+    lista = []
+    lista_modelo = []
+    filename= "/formularios/data/guitarras.json"
+    with open(str(settings.BASE_DIR)+filename, "r") as file:
+        guitarras=json.load(file)
+        diccionario = guitarras.get('guitarras')
+        for elemento in diccionario[-5:]:
+            cuerdas = elemento.get('cuerdas')
+            modelo = elemento.get('modelo')
+            lista.append(cuerdas)
+            lista_modelo.append(modelo)
+    print(lista_modelo)
+    context = {'modelo': lista_modelo, 'valor' : lista}
+    return render(request, "formularios/grafico2.html", context)
