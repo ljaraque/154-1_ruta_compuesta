@@ -3,6 +3,7 @@ import json
 from django.shortcuts import render, redirect
 from .forms import FormularioGuitarra
 from django.conf import settings
+from .models import Guitarra
 
 # Create your views here.
 
@@ -89,3 +90,32 @@ def eliminar_guitarra(request, id):
         return redirect('formularios:crear_exitoso')
     context = {'id': id} 
     return render(request, "formularios/eliminar_guitarra.html", context)
+
+
+def crear_guitarra_db(request):
+    formulario = FormularioGuitarra(request.POST or None)
+    context = {'form': formulario}
+    if formulario.is_valid():
+        form_data = formulario.cleaned_data
+        form_data['fecha_compra']=form_data['fecha_compra'].strftime("%Y-%m-%d")
+        Guitarra.objects.create(
+                        modelo = form_data['modelo'],
+                        marca = form_data['marca'],
+                        cuerdas = form_data['cuerdas'],
+                        fecha_compra = form_data['fecha_compra']
+                        )
+        return redirect('formularios:lista_guitarras_db')
+    return render(request, 'formularios/crear_guitarra_db.html', context)
+
+def lista_guitarras_db(request):
+    lista_guitarras = list(Guitarra.objects.all().values())
+    context = {'guitarras': lista_guitarras}
+    return render(request, 'formularios/lista_guitarras_db.html', context=context)
+
+def eliminar_guitarra_db(request, id):
+    if request.method == "POST":
+        Guitarra.objects.filter(id=id).delete()
+        return redirect('formularios:lista_guitarras_db')
+    context = {'id': id} 
+    return render(request, "formularios/eliminar_guitarra_db.html", context)
+

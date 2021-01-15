@@ -21,5 +21,5 @@ class FormularioGuitarra(forms.Form):
     cuerdas = forms.IntegerField(initial=6,
                     validators=[validators.MinValueValidator(6, "Mínimo 6 cuerdas!!"),
                                 validators.MaxValueValidator(12, "Máximo 12 cuerdas!!")])
-    fecha_compra = forms.DateField( validators=[validar_fecha])
+    fecha_compra = forms.DateField(validators=[validar_fecha])
 
