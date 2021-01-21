@@ -36,6 +36,8 @@ def actualizar_archivo(filename, form_data, settings):
     with open(str(settings.BASE_DIR)+filename, 'w') as file:
         json.dump(guitarras, file)
 
+
+#CRUD: Crear guitarra con vista basada en función y archivo de datos
 def crear_guitarra(request):
     formulario = FormularioGuitarra(request.POST or None)
     context = {'form': formulario}
@@ -53,10 +55,12 @@ def crear_guitarra(request):
         return redirect('formularios:crear_exitoso')
     return render(request, 'formularios/crear_guitarra.html', context)
 
+#CRUD: Lista de guitarras con vista basada en función y archivo de datos
 def crear_exitoso(request):
     filename= "/formularios/data/guitarras.json"
     guitarras = leer_archivo(filename, settings)
     return render(request, 'formularios/crear_exitoso.html', context=guitarras)
+
 
 def grafico2(request):
     lista = []
@@ -75,6 +79,7 @@ def grafico2(request):
     return render(request, "formularios/grafico2.html", context)
 
 
+#CRUD: Eliminar guitarra con vista basada en función y archivo de datos
 def eliminar_guitarra(request, id):
     if request.method == "POST":
         filename= "/formularios/data/guitarras.json"
@@ -92,6 +97,7 @@ def eliminar_guitarra(request, id):
     return render(request, "formularios/eliminar_guitarra.html", context)
 
 
+#CRUD: Crear guitarra con vista basada en función y base de datos
 def crear_guitarra_db(request):
     formulario = FormularioGuitarra(request.POST or None)
     context = {'form': formulario}
@@ -107,11 +113,19 @@ def crear_guitarra_db(request):
         return redirect('formularios:lista_guitarras_db')
     return render(request, 'formularios/crear_guitarra_db.html', context)
 
+
+#CRUD: Editar guitarras con vista basada en función y base de datos
+
+
+
+#CRUD: Lista de guitarras con vista basada en función y base de datos
 def lista_guitarras_db(request):
     lista_guitarras = list(Guitarra.objects.all().values())
     context = {'guitarras': lista_guitarras}
     return render(request, 'formularios/lista_guitarras_db.html', context=context)
 
+
+#CRUD: Eliminar guitarra con vista basada en función y base de datos
 def eliminar_guitarra_db(request, id):
     if request.method == "POST":
         Guitarra.objects.filter(id=id).delete()
