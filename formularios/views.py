@@ -115,6 +115,21 @@ def crear_guitarra_db(request):
 
 
 #CRUD: Editar guitarras con vista basada en función y base de datos
+def editar_guitarra_db(request, id):
+    guitarra = Guitarra.objects.filter(id=id).values()[0]
+    formulario = FormularioGuitarra(request.POST or None, initial=guitarra)
+    context = {'form': formulario, 'id':id}
+    if formulario.is_valid():
+        form_data = formulario.cleaned_data
+        form_data['fecha_compra']=form_data['fecha_compra'].strftime("%Y-%m-%d")
+        Guitarra.objects.filter(id=id).update(
+                        modelo = form_data['modelo'],
+                        marca = form_data['marca'],
+                        cuerdas = form_data['cuerdas'],
+                        fecha_compra = form_data['fecha_compra']
+                        )
+        return redirect('formularios:lista_guitarras_db')
+    return render(request, 'formularios/editar_guitarra_db.html', context)
 
 
 
