@@ -3,7 +3,10 @@ import json
 from django.shortcuts import render, redirect
 from .forms import FormularioGuitarra
 from django.conf import settings
-from .models import Guitarra
+from .models import Guitarra, GuitarraCBV
+from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 
 # Create your views here.
 
@@ -147,4 +150,15 @@ def eliminar_guitarra_db(request, id):
         return redirect('formularios:lista_guitarras_db')
     context = {'id': id} 
     return render(request, "formularios/eliminar_guitarra_db.html", context)
+
+
+#CRUD: Vistas basadas en clases CBV
+class ListaGuitarras(ListView):
+    model = GuitarraCBV
+
+
+class CrearGuitarra(CreateView):
+    model = GuitarraCBV
+    fields = '__all__'
+    success_url = reverse_lazy('formularios:lista_guitarras_db_cbv')
 

@@ -12,5 +12,7 @@ urlpatterns = [
     path('lista_guitarras_db', views.lista_guitarras_db, name="lista_guitarras_db"),
     path('<id>/borrar_db', views.eliminar_guitarra_db, name="eliminar_guitarra_db"),
     path('<id>/editar_db', views.editar_guitarra_db, name="editar_guitarra_db"),
+    path('lista_guitarras_db_cbv', views.ListaGuitarras.as_view(), name="lista_guitarras_db_cbv"),
+    path('crear_guitarra_db_cbv', views.CrearGuitarra.as_view(), name='crear_guitarra_db_cbv'),
     
 ]
