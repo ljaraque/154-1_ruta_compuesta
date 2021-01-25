@@ -11,9 +11,10 @@
       crossorigin="anonymous">
 </head>
 <body>
-    <h1>Guitarras Desde Base de Datos!!!</h1>
+    <h1>Guitarras Desde Base de Datos!!! NO AUTO</h1>
+    <h4>{{mensaje_especial}}</h4>
     <p><a href="{% url 'formularios:crear_guitarra_db_cbv' %}">Agregar Nueva Guitarra</a></p>
-    <div class="row"> {% for row in guitarracbv_list %} 
+    <div class="row"> {% for row in guitarras %} 
         <div class="col-sm-3" style="padding-top: 10px;"> 
             <div class="card"> 
                 <div class="card-img"> 

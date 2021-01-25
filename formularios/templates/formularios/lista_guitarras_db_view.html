@@ -11,16 +11,16 @@
       crossorigin="anonymous">
 </head>
 <body>
-    <h1>Guitarras Desde Base de Datos!!!</h1>
-    <p><a href="{% url 'formularios:crear_guitarra_db_cbv' %}">Agregar Nueva Guitarra</a></p>
-    <div class="row"> {% for row in guitarracbv_list %} 
+    <h1>Guitarras Desde Base de Datos!!! VIEW</h1>
+    <p><a href="#">Agregar Nueva Guitarra</a></p>
+    <div class="row"> {% for row in guitarras %} 
         <div class="col-sm-3" style="padding-top: 10px;"> 
             <div class="card"> 
                 <div class="card-img"> 
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRph9tJ68ak4W7I1kcIoTSJSNlmgOFWmwQShA&usqp=CAU" width="100%" alt=""> 
                     <h5 class="card-text mb-1 text-black-50 small">{{forloop.counter}}
-                        <a href="{% url 'formularios:editar_guitarra_db_cbv' pk=row.id %}"> | Editar</a>
-                        <a href="{% url 'formularios:eliminar_guitarra_db_cbv' pk=row.id %}"> | Eliminar</a>
+                        <a href="{% url 'formularios:editar_guitarra_db_view' id=row.id %}"> | Editar</a>
+                        <a href="#"> | Eliminar</a>
                     </h5> 
                 </div> 
                 <div class="card-body"> 

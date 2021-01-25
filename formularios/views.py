@@ -6,7 +6,8 @@ from django.conf import settings
 from .models import Guitarra, GuitarraCBV
 from django.views.generic import ListView
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.base import View
 
 # Create your views here.
 
@@ -135,6 +136,31 @@ def editar_guitarra_db(request, id):
     return render(request, 'formularios/editar_guitarra_db.html', context)
 
 
+class EditarGuitarraView(View):
+    def get(self, id):
+        guitarra = Guitarra.objects.filter(id=id).values()[0]
+        formulario = FormularioGuitarra(initial=guitarra)
+        context = {'form': formulario, 'id':id}
+        return render(request, 'formularios/editar_guitarra_db_view.html', context)
+
+    def post(self):
+        if formulario.is_valid():
+            form_data = formulario.cleaned_data
+            form_data['fecha_compra']=form_data['fecha_compra'].strftime("%Y-%m-%d")
+            Guitarra.objects.filter(id=id).update(
+                            modelo = form_data['modelo'],
+                            marca = form_data['marca'],
+                            cuerdas = form_data['cuerdas'],
+                            fecha_compra = form_data['fecha_compra']
+                            )
+            return redirect('formularios:lista_guitarras_db_view')
+        
+class ListaGuitarraView(View):
+    def get(self, request):
+        lista_guitarras = list(Guitarra.objects.all().values())
+        context = {'guitarras': lista_guitarras}
+        return render(request, 'formularios/lista_guitarras_db_view.html', context=context)
+
 
 #CRUD: Lista de guitarras con vista basada en función y base de datos
 def lista_guitarras_db(request):
@@ -157,8 +183,26 @@ class ListaGuitarras(ListView):
     model = GuitarraCBV
 
 
+class ListaGuitarrasNoAuto(ListView):
+    model = GuitarraCBV
+    context_object_name = 'guitarras'
+    extra_context = {'mensaje_especial':'ListView menos automatizada '}
+    template_name = 'formularios/guitarracbv_list_no_auto.html'
+
+
 class CrearGuitarra(CreateView):
     model = GuitarraCBV
     fields = '__all__'
     success_url = reverse_lazy('formularios:lista_guitarras_db_cbv')
 
+
+class EditarGuitarra(UpdateView):
+    model = GuitarraCBV
+    fields = '__all__'
+    success_url = reverse_lazy('formularios:lista_guitarras_db_cbv')
+
+
+class EliminarGuitarra(DeleteView):
+    model = GuitarraCBV
+    success_url = reverse_lazy('formularios:lista_guitarras_db_cbv')
+    

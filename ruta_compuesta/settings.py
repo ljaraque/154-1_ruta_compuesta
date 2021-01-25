@@ -25,7 +25,7 @@ SECRET_KEY = 'b5+x_wlezjo-y9!_84uxd@1on0y4maq^!#39g=40oe0gk-&tvh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['190.160.154.251', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ruta_compuesta_154_1',
         'USER': 'postgres',
-        'PASSWORD': 'asddsa321',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432',
     }

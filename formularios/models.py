@@ -58,3 +58,6 @@ class GuitarraCBV(models.Model):
     madera = models.CharField(max_length=20, default="No informada")
     fecha_compra = models.DateField(
                 validators=[validar_fecha])
+
+    class Meta:
+        ordering = ['id']
