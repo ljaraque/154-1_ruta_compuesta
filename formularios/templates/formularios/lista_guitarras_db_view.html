@@ -19,7 +19,7 @@
                 <div class="card-img"> 
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRph9tJ68ak4W7I1kcIoTSJSNlmgOFWmwQShA&usqp=CAU" width="100%" alt=""> 
                     <h5 class="card-text mb-1 text-black-50 small">{{forloop.counter}}
-                        <a href="{% url 'formularios:editar_guitarra_db_view' id=row.id %}"> | Editar</a>
+                        <a href="{% url 'formularios:editar_guitarra_db_view' pk=row.id %}"> | Editar</a>
                         <a href="#"> | Eliminar</a>
                     </h5> 
                 </div> 
