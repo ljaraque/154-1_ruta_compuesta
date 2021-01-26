@@ -137,26 +137,42 @@ def editar_guitarra_db(request, id):
 
 
 class EditarGuitarraView(View):
+    template_name = 'formularios/editar_guitarra_db_view.html'
+    success_url = 'formularios:lista_guitarras_db_view'
+    form_class = FormularioGuitarra
+    model = Guitarra
+
     def get(self, request, pk):
-        guitarra = Guitarra.objects.filter(id=pk).values()[0]
-        formulario = FormularioGuitarra(initial=guitarra)
+        guitarra = self.model.objects.filter(id=pk).values()[0]
+        formulario = self.form_class(initial=guitarra)
         context = {'form': formulario, 'id':pk}
-        return render(request, 'formularios/editar_guitarra_db_view.html', context)
+        return render(request, self.template_name, context)
 
     def post(self, request, pk):
-        formulario = FormularioGuitarra(request.POST) 
+        formulario = self.form_class(request.POST) 
         if formulario.is_valid():
             form_data = formulario.cleaned_data
             form_data['fecha_compra']=form_data['fecha_compra'].strftime("%Y-%m-%d")
-            Guitarra.objects.filter(id=pk).update(
+            self.model.objects.filter(id=pk).update(
                             modelo = form_data['modelo'],
                             marca = form_data['marca'],
                             cuerdas = form_data['cuerdas'],
                             fecha_compra = form_data['fecha_compra']
                             )
-            return redirect('formularios:lista_guitarras_db_view')
-        
-        
+            return redirect(self.success_url)
+    
+# Esta vista es sólo para ilustrar cómo podría heredarse una vista previa
+# sin necesidad de escribir un código completo similar
+# ATENCIÓN: La vista EditarGuitarraView aún no está 100% preparada para
+# ser heredada. Si quiere heredarse debe terminarse su desarrollo.
+'''
+class EditarMusicoView(EditarGuitarraView):
+    template_name = 'formularios/editar_musico_db_view.html'
+    success_url = 'formularios:lista_musicos_db_view'
+    form_class = FormularioMusico
+    model = Musico
+'''
+
 class ListaGuitarraView(View):
     def get(self, request):
         lista_guitarras = list(Guitarra.objects.all().values())
