@@ -11,6 +11,12 @@
       crossorigin="anonymous">
 </head>
 <body>
+    <!-- Si existe un mensaje -->
+    {% if messages %}
+        {% for mensaje in messages %}
+            <h3>{{mensaje}}</h3>
+        {% endfor %}
+    {% endif %}
     <h1>Guitarras Desde Base de Datos!!!</h1>
     <p><a href="{% url 'formularios:crear_guitarra_db' %}">Agregar Nueva Guitarra</a></p>
     <div class="row"> {% for row in guitarras %} 

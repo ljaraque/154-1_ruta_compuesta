@@ -8,6 +8,8 @@ from django.views.generic import ListView
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
+from django.contrib import messages
+
 # Create your views here.
 
 '''
@@ -107,12 +109,17 @@ def crear_guitarra_db(request):
     if formulario.is_valid():
         form_data = formulario.cleaned_data
         form_data['fecha_compra']=form_data['fecha_compra'].strftime("%Y-%m-%d")
-        Guitarra.objects.create(
+        guitarra = Guitarra.objects.create(
                         modelo = form_data['modelo'],
                         marca = form_data['marca'],
                         cuerdas = form_data['cuerdas'],
                         fecha_compra = form_data['fecha_compra']
                         )
+        messages.success(request, 'La nueva guitarra de id='+ str(guitarra.id)+' ha sido creada!')
+
+        messages.success(request, 'Mensaje 2')
+        messages.success(request, 'Mensaje 3')
+        
         return redirect('formularios:lista_guitarras_db')
     return render(request, 'formularios/crear_guitarra_db.html', context)
 
