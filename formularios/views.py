@@ -137,23 +137,25 @@ def editar_guitarra_db(request, id):
 
 
 class EditarGuitarraView(View):
-    def get(self, id):
-        guitarra = Guitarra.objects.filter(id=id).values()[0]
+    def get(self, request, pk):
+        guitarra = Guitarra.objects.filter(id=pk).values()[0]
         formulario = FormularioGuitarra(initial=guitarra)
-        context = {'form': formulario, 'id':id}
+        context = {'form': formulario, 'id':pk}
         return render(request, 'formularios/editar_guitarra_db_view.html', context)
 
-    def post(self):
+    def post(self, request, pk):
+        formulario = FormularioGuitarra(request.POST) 
         if formulario.is_valid():
             form_data = formulario.cleaned_data
             form_data['fecha_compra']=form_data['fecha_compra'].strftime("%Y-%m-%d")
-            Guitarra.objects.filter(id=id).update(
+            Guitarra.objects.filter(id=pk).update(
                             modelo = form_data['modelo'],
                             marca = form_data['marca'],
                             cuerdas = form_data['cuerdas'],
                             fecha_compra = form_data['fecha_compra']
                             )
             return redirect('formularios:lista_guitarras_db_view')
+        
         
 class ListaGuitarraView(View):
     def get(self, request):
