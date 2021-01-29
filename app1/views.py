@@ -1,6 +1,7 @@
 import datetime
 import random
 import csv
+import uuid
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -10,6 +11,7 @@ from django.conf import settings
 
 
 def datos(request):
+    print(request.COOKIES)
     filename= "/app1/data/iris.csv"
     ruta_completa_archivo = str(settings.BASE_DIR)+filename
     with open(ruta_completa_archivo, "r") as archivo:
@@ -18,13 +20,24 @@ def datos(request):
         for elemento in data:
             data_list.append(elemento)
     context = {'datos_desde_archivo': data_list}
-    return render(request, 'app1/datos.html', context)
+    response = render(request, 'app1/datos.html', context)
+    response.set_cookie(key='identificador', value=uuid.uuid4(), max_age=365*24*60*60)
+    response.set_cookie(key='eltiempo', value='nublado', max_age=20)
+    return response
 
 
 def index(request):
+    if 'num_visitas' not in request.session:
+        request.session['num_visitas'] = 1
+    else:
+        request.session['num_visitas'] += 1
+    
+
 
     fecha_hora_actual = str(datetime.datetime.now())
+
     #lista_aleatoria = [i for i in range(0,random.randint(2,10))]
+
     lista = [1,2,3,4,5,6,7]
     nombres = ["Boris", "Jean Carlos", "Jesús", 
                 "Jonathan", "Rocío", "Daniela", "Francisca",
@@ -42,7 +55,9 @@ def index(request):
 
     context = {'contenido_dinamico': fecha_hora_actual,
                 'contenido_dinamico2':  lista,
-                'nombres': nombres}
+                'nombres': nombres,
+                'num_visitas': request.session['num_visitas']
+                }
     
     return render(request, 'app1/index.html', context)
 
