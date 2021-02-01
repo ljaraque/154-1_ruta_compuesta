@@ -9,8 +9,13 @@ from django.conf import settings
 
 # Create your views here.
 
-
+from django.shortcuts import reverse, redirect
+from django.utils.http import urlencode
 def datos(request):
+    if not request.user.is_authenticated:
+        loginurl = reverse('login') + '?' + urlencode({'next':request.path})
+        return redirect(loginurl)
+
     print(request.COOKIES)
     filename= "/app1/data/iris.csv"
     ruta_completa_archivo = str(settings.BASE_DIR)+filename
@@ -72,3 +77,11 @@ def noticias(request):
 
 def prueba(request):
     return render(request, 'app1/base.html')
+
+from django.views.generic.base import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class Empresa(LoginRequiredMixin, View):
+    def get(self,request):
+        return render(request,'app1/empresa.html')
+

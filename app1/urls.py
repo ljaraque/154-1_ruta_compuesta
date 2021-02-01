@@ -11,6 +11,6 @@ urlpatterns = [
     path('datos/', views.datos, name='datos'),
     path('prueba/', views.prueba),
 
-    path('empresa/', TemplateView.as_view(template_name='app1/empresa.html'), name='empresa'),
+    path('empresa/', views.Empresa.as_view(), name='empresa'),
 
 ]
