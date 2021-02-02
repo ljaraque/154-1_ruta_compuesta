@@ -11,17 +11,25 @@ def map(request):
 
 
 
-
-def el_usuario_es_admin(usuario):
+'''
+def usuario_permitido(usuario):
     es_admin = usuario.is_superuser
     return es_admin
+'''
+
+def usuario_permitido(usuario):
+    if usuario.profile.rol == "estudiante":
+        validacion = True
+    else:
+        validacion = False
+    return validacion
 
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 class Especial(LoginRequiredMixin,UserPassesTestMixin, View):
     def test_func(self):
-        return el_usuario_es_admin(self.request.user)
+        return usuario_permitido(self.request.user)
 
     def get(self,request):
         return render(request,'app2/especial.html')

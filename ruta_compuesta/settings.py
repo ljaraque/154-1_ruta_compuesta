@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ruta_compuesta_154_1',
         'USER': 'postgres',
-        'PASSWORD': 'asddsa321',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -140,3 +140,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'root')
 
 
 LOGIN_REDIRECT_URL = '/app1/inicio'
+
+### Auto Logout si no hay actividad en un período determinado (en segundos)
+
+SESSION_COOKIE_AGE = 300              # vida cookie de 5 minutos = 5 * 60 segundos               
+
+SESSION_SAVE_EVERY_REQUEST = True        # cada request renueva el tiempo
